@@ -23,7 +23,7 @@
   <nav class="navbar navbar-expand-lg bg-custom">
     <div class="container flex-column align-items-center">
       <span class="navbar-brand mx-auto text-white fs-2 fw-bold">TypeRacer</span>
-      <button id="instructions" class="btn btn-secondary mt-2">Instructions</button>
+      <button id="instructions" class="btn btn-light mt-2">Instructions</button>
     </div>
   </nav>
 <!-- Responsive Bootstrap 5 grid: 2 columns, stacked on small screens, 2/3 + 1/3 split on md+ -->
@@ -46,37 +46,37 @@
     </div>
     <!-- Typing Test Area -->
     <div class="col-12 col-md-8 mb-4 mb-md-0">
-        <div class="p-4 bg-light rounded shadow-sm h-100">
+        <div class="p-4 bg-white rounded shadow-sm h-100">
             <div class="mb-3">
                 <p id="sampleText" class="fs-5">
-                    The quick brown fox jumps over the lazy dog. Practice your typing speed by copying this sentence as quickly and accurately as you can.
+                    The quick brown fox jumps over the lazy dog. 
                 </p>
             </div>
             <div class="mb-3">
                 <textarea id="typingInput" class="form-control" rows="4" placeholder="Start typing here..." disabled></textarea>
             </div>
-            <div class="d-flex gap-2">
-                <button id="startBtn" class="btn btn-success">Start</button>
-                <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
-                <button id="retryBtn" class="btn btn-secondary" disabled>Retry</button>
+            <div class="d-flex justify-content-center gap-2">
+                <button id="startBtn" class="btn btn-custom">Start</button>
+                <button id="stopBtn" class="btn btn-custom">Stop</button>
+                <button id="retryBtn" class="btn btn-custom">Retry</button>
             </div>
         </div>
     </div>
     <!-- Right column: 1/3 width on md+, full width on small -->
     <div class="col-12 col-md-4">
       <!-- Place your stats, controls, or sidebar content here -->
-      <div class="p-4 bg-white rounded shadow-sm h-100">
-        <h2>Results</h2>
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+    <div class="p-4 bg-white rounded shadow-sm h-100 d-flex flex-column justify-content-start">
+        <h2 class="text-center">Results</h2>
+        <ul class="list-group text-center border-0">
+            <li class="list-group-item border-0 d-flex flex-column justify-content-center align-items-center">
                 Level
                 <span id="resultLevel" class="fw-bold">-</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li class="list-group-item border-0 d-flex flex-column justify-content-center align-items-center">
                 Time (s)
                 <span id="resultTime" class="fw-bold">-</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li class="list-group-item border-0 d-flex flex-column justify-content-center align-items-center"></li>
                 WPM
                 <span id="resultWpm" class="fw-bold">-</span>
             </li>

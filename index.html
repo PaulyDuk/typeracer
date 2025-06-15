@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg bg-custom">
+  <nav class="navbar navbar-expand-lg bg-custom p-5">
     <div class="container flex-column align-items-center">
-      <span class="navbar-brand mx-auto text-white fs-2 fw-bold">TypeRacer</span>
+      <span class="navbar-brand mx-auto text-white fs-2 fw-bold"><h1>TypeRacer</h1></span>
       <button id="instructions" class="btn btn-light mt-2">Instructions</button>
     </div>
   </nav>
@@ -33,8 +33,13 @@
     <!-- Left column: 2/3 width on md+, full width on small -->
     <div class="col-12 col-md-8 mb-4 mb-md-0">
       <!-- Place your typing area or main content here -->
-      <div class="p-4 bg-light rounded shadow-sm h-100">
-        <div class="input-group mb-3">
+      <div class="p-4 bg-white  h-100">
+
+      </div>
+    </div>
+    <!-- Typing Test Area -->
+    <div class="col-12 col-md-8 mb-4 mb-md-0">
+                <div class="input-group mb-4 px-4">
             <label class="input-group-text" for="difficultySelect">Select Difficulty</label>
             <select class="form-select" id="difficultySelect">
                 <option value="easy">Easy</option>
@@ -42,18 +47,17 @@
                 <option value="hard">Hard</option>
             </select>
         </div>
-      </div>
-    </div>
-    <!-- Typing Test Area -->
-    <div class="col-12 col-md-8 mb-4 mb-md-0">
-        <div class="p-4 bg-white rounded shadow-sm h-100">
+                <p class="lead px-4">Test your typing speed by typing the text shown below:</p>
+        <div class="p-4 bg-white h-100">
+            
             <div class="mb-3">
-                <p id="sampleText" class="fs-5">
+                
+                <p id="sampleText" class="fs-5 border px-3">
                     The quick brown fox jumps over the lazy dog. 
                 </p>
             </div>
             <div class="mb-3">
-                <textarea id="typingInput" class="form-control" rows="4" placeholder="Start typing here..." disabled></textarea>
+                <textarea id="typingInput" class="form-control" rows="4" placeholder="Click the Start button to begin the test" ></textarea>
             </div>
             <div class="d-flex justify-content-center gap-2">
                 <button id="startBtn" class="btn btn-custom">Start</button>
@@ -65,7 +69,7 @@
     <!-- Right column: 1/3 width on md+, full width on small -->
     <div class="col-12 col-md-4">
       <!-- Place your stats, controls, or sidebar content here -->
-    <div class="p-4 bg-white rounded shadow-sm h-100 d-flex flex-column justify-content-start">
+    <div class="p-4 bg-white h-70 d-flex flex-column justify-content-start" id="results-area">
         <h2 class="text-center">Results</h2>
         <ul class="list-group text-center border-0">
             <li class="list-group-item border-0 d-flex flex-column justify-content-center align-items-center">

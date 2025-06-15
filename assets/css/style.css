@@ -1,9 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family= Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+body {
+    font-family: Nunito, sans-serif;
+}
+
+h1 {
+    font-family: Alegreya, serif;
+}
+
+header {
+    background-color: #ff8400;
+    color: white;
+}
+
 .bg-custom {
     background-color: #ff8400;
 }
 
 .btn-custom {
-    border-color: #ff8400;
+    border: 2px solid #ff8400;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    margin: 5px;
+}
+
+.btn-custom:hover {
+    background-color: #ff8400;
+    color: #fff;
+}
+
+#results-area {
+    box-shadow: 0 0 10px #ff8400;
+    border-radius: 10px;
+    padding: 20px;
 }

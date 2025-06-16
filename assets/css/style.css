@@ -34,3 +34,12 @@ header {
     border-radius: 10px;
     padding: 20px;
 }
+
+.highlight-correct {
+    color: #007bff; /* Bootstrap blue */
+    font-weight: bold;
+}
+.highlight-incorrect {
+    color: #dc3545; /* Bootstrap red */
+    font-weight: bold;
+}

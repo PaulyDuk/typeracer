@@ -16,17 +16,18 @@ const sampleTexts = {
   ]
 };
 
+const bestResults = {
+    easy: { time: null, wpm: null },
+    medium: { time: null, wpm: null },
+    hard: { time: null, wpm: null }
+};
+
 let testStartTime = null;
 let testEndTime = null;
+let testStarted = false;
 
 // Change sample text when difficulty changes
 document.getElementById('difficultySelect').addEventListener('change', setRandomSampleText);
-
-let testStarted = false;
-
-// Remove Start/Stop button event listeners
-// document.getElementById('startBtn').addEventListener('click', startTest);
-// document.getElementById('stopBtn').addEventListener('click', stopTest);
 
 // Add event listeners for typing-input
 document.getElementById('typing-input').addEventListener('input', handleTypingInput);
@@ -62,12 +63,6 @@ function startTestOnFirstInput() {
     document.getElementById('result-wpm').textContent = '-';
     document.getElementById('result-level').textContent = '-';
 }
-
-const bestResults = {
-    easy: { time: null, wpm: null },
-    medium: { time: null, wpm: null },
-    hard: { time: null, wpm: null }
-};
 
 function stopTestOnEnter() {
     testEndTime = performance.now();

@@ -22,58 +22,50 @@ let testEndTime = null;
 // Change sample text when difficulty changes
 document.getElementById('difficultySelect').addEventListener('change', setRandomSampleText);
 
-// Attach event listeners for start and stop buttons
-document.getElementById('startBtn').addEventListener('click', startTest);
-document.getElementById('stopBtn').addEventListener('click', stopTest);
+let testStarted = false;
 
-// Optionally, set a random sample text on page load
-window.addEventListener('DOMContentLoaded', setRandomSampleText);
+// Remove Start/Stop button event listeners
+// document.getElementById('startBtn').addEventListener('click', startTest);
+// document.getElementById('stopBtn').addEventListener('click', stopTest);
 
-//initialize the test buttons
-window.addEventListener('DOMContentLoaded', initializeTestButtons);
+// Add event listeners for typing-input
+document.getElementById('typing-input').addEventListener('input', handleTypingInput);
+document.getElementById('typing-input').addEventListener('keydown', handleTypingKeydown);
 
-function setRandomSampleText() {
-  const select = document.getElementById('difficultySelect');
-  const difficulty = select.value;
-  const options = sampleTexts[difficulty];
-  const randomIndex = Math.floor(Math.random() * options.length);
-  document.getElementById('sample-text').textContent = options[randomIndex];
-  highlightSampleText(); // Ensure highlighting is applied on new sample text
+function handleTypingInput() {
+    if (!testStarted && document.getElementById('typing-input').value.trim() !== "") {
+        startTestOnFirstInput();
+    }
+    if (testStarted) {
+        highlightSampleText();
+    }
 }
 
-function startTest() {
-    // Record the start time
+function handleTypingKeydown(event) {
+    if (testStarted && event.key === "Enter") {
+        event.preventDefault(); // Prevent newline in textarea
+        stopTestOnEnter();
+    }
+}
+
+function startTestOnFirstInput() {
+    testStarted = true;
     testStartTime = performance.now();
     testEndTime = null;
-
-    // Disable Start, enable Stop
-    document.getElementById('startBtn').disabled = true;
-    document.getElementById('stopBtn').disabled = false;
-
-    // Enable typing input and clear it
-    const typingInput = document.getElementById('typing-input');
-    typingInput.disabled = false;
-    typingInput.value = '';
-    typingInput.placeholder = '';
-    typingInput.focus();
-
-    // Clear previous results
-    document.getElementById('result-time').textContent = '-';
 
     // Enable real-time feedback
     enableTypingFeedback();
     highlightSampleText();
+
+    // Clear previous results
+    document.getElementById('result-time').textContent = '-';
+    document.getElementById('result-wpm').textContent = '-';
+    document.getElementById('result-level').textContent = '-';
 }
 
-function canStopTest() {
-    const sampleText = document.getElementById('sample-text').textContent.trim();
-    const userInput = document.getElementById('typing-input').value.trim();
-    return userInput === sampleText;
-}
-
-function stopTest() {
-    // Record the end time
+function stopTestOnEnter() {
     testEndTime = performance.now();
+    testStarted = false;
 
     // Calculate elapsed time in seconds
     const elapsedMs = testEndTime - testStartTime;
@@ -105,10 +97,6 @@ function stopTest() {
     const difficulty = document.getElementById('difficultySelect').value;
     document.getElementById('result-level').textContent = difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
 
-    // Enable Start, disable Stop
-    document.getElementById('startBtn').disabled = false;
-    document.getElementById('stopBtn').disabled = true;
-
     // Disable typing input
     document.getElementById('typing-input').disabled = true;
 
@@ -116,11 +104,56 @@ function stopTest() {
     disableTypingFeedback();
 }
 
-// Set initial button states on page load
+// Update retry logic to reset everything for a new test
+document.getElementById('retryBtn').addEventListener('click', resetTest);
+
+function resetTest() {
+    testStarted = false;
+    testStartTime = null;
+    testEndTime = null;
+
+    // Reset typing input
+    const typingInput = document.getElementById('typing-input');
+    typingInput.disabled = false;
+    typingInput.value = '';
+    typingInput.placeholder = 'Start typing to begin the test';
+    typingInput.focus();
+
+    // Reset results
+    document.getElementById('result-time').textContent = '-';
+    document.getElementById('result-wpm').textContent = '-';
+    document.getElementById('result-level').textContent = '-';
+
+    // Set new sample text
+    setRandomSampleText();
+
+    // Remove feedback
+    highlightSampleText();
+}
+
+// Update setRandomSampleText to highlight on new text
+function setRandomSampleText() {
+    const select = document.getElementById('difficultySelect');
+    const difficulty = select.value;
+    const options = sampleTexts[difficulty];
+    const randomIndex = Math.floor(Math.random() * options.length);
+    document.getElementById('sample-text').textContent = options[randomIndex];
+    highlightSampleText();
+
+    // Clear and reset typing input
+    const typingInput = document.getElementById('typing-input');
+    typingInput.value = '';
+    typingInput.placeholder = 'Start typing to begin the test';
+    typingInput.disabled = false;
+    typingInput.focus();
+    highlightSampleText();
+}
+
+// Update initializeTestButtons to only affect typing-input
 function initializeTestButtons() {
-    document.getElementById('startBtn').disabled = false;
-    document.getElementById('stopBtn').disabled = true;
-    document.getElementById('typing-input').disabled = true;
+    document.getElementById('typing-input').disabled = false;
+    document.getElementById('typing-input').value = '';
+    document.getElementById('typing-input').placeholder = 'Start typing to begin the test';
 }
 
 function highlightSampleText() {

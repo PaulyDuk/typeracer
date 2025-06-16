@@ -116,16 +116,12 @@ function stopTestOnEnter() {
 function updateBestResults(difficulty, time, wpm) {
     let best = bestResults[difficulty];
 
-    let isBestTime = best.time === null || time < best.time;
-    let isBestWpm = best.wpm === null || wpm > best.wpm;
-
-    if (isBestTime) {
-        best.time = time;
-        document.getElementById(`best-time-${difficulty}`).textContent = time.toFixed(2);
-    }
-    if (isBestWpm) {
+    // Only update if WPM is higher than previous best
+    if (best.wpm === null || wpm > best.wpm) {
         best.wpm = wpm;
+        best.time = time;
         document.getElementById(`best-wpm-${difficulty}`).textContent = wpm;
+        document.getElementById(`best-time-${difficulty}`).textContent = time.toFixed(2);
     }
 }
 

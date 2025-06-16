@@ -29,3 +29,59 @@ document.getElementById('difficultySelect').addEventListener('change', setRandom
 
 // Optionally, set a random sample text on page load
 window.addEventListener('DOMContentLoaded', setRandomSampleText);
+
+let testStartTime = null;
+let testEndTime = null;
+
+function startTest() {
+    // Record the start time
+    testStartTime = performance.now();
+    testEndTime = null;
+
+    // Disable Start, enable Stop
+    document.getElementById('startBtn').disabled = true;
+    document.getElementById('stopBtn').disabled = false;
+
+    // Enable typing input and clear it
+    const typingInput = document.getElementById('typing-input');
+    typingInput.disabled = false;
+    typingInput.value = '';
+    typingInput.placeholder = '';
+    typingInput.focus();
+
+    // Clear previous results
+    document.getElementById('result-time').textContent = '-';
+}
+
+function stopTest() {
+    // Record the end time
+    testEndTime = performance.now();
+
+    // Calculate elapsed time in seconds
+    const elapsedMs = testEndTime - testStartTime;
+    const elapsedSeconds = elapsedMs / 1000;
+    const roundedSeconds = elapsedSeconds.toFixed(2);
+
+    // Display the time in the results area
+    document.getElementById('result-time').textContent = roundedSeconds;
+
+    // Enable Start, disable Stop
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('stopBtn').disabled = true;
+
+    // Disable typing input
+    document.getElementById('typing-input').disabled = true;
+}
+
+// Set initial button states on page load
+function initializeTestButtons() {
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('stopBtn').disabled = true;
+    document.getElementById('typing-input').disabled = true;
+}
+
+// Attach event listeners
+document.getElementById('startBtn').addEventListener('click', startTest);
+document.getElementById('stopBtn').addEventListener('click', stopTest);
+
+window.addEventListener('DOMContentLoaded', initializeTestButtons);

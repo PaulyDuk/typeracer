@@ -63,6 +63,12 @@ function startTestOnFirstInput() {
     document.getElementById('result-level').textContent = '-';
 }
 
+const bestResults = {
+    easy: { time: null, wpm: null },
+    medium: { time: null, wpm: null },
+    hard: { time: null, wpm: null }
+};
+
 function stopTestOnEnter() {
     testEndTime = performance.now();
     testStarted = false;
@@ -97,11 +103,30 @@ function stopTestOnEnter() {
     const difficulty = document.getElementById('difficultySelect').value;
     document.getElementById('result-level').textContent = difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
 
+    // Update best results if this run is better
+    updateBestResults(difficulty, elapsedSeconds, wpm);
+
     // Disable typing input
     document.getElementById('typing-input').disabled = true;
 
     // Disable real-time feedback
     disableTypingFeedback();
+}
+
+function updateBestResults(difficulty, time, wpm) {
+    let best = bestResults[difficulty];
+
+    let isBestTime = best.time === null || time < best.time;
+    let isBestWpm = best.wpm === null || wpm > best.wpm;
+
+    if (isBestTime) {
+        best.time = time;
+        document.getElementById(`best-time-${difficulty}`).textContent = time.toFixed(2);
+    }
+    if (isBestWpm) {
+        best.wpm = wpm;
+        document.getElementById(`best-wpm-${difficulty}`).textContent = wpm;
+    }
 }
 
 // Update retry logic to reset everything for a new test
